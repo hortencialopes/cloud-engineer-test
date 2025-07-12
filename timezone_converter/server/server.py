@@ -3,7 +3,8 @@ import grpc
 from datetime import datetime
 import pytz
 
-import timezone_pb2 , timezone_pb2_grpc
+import timezone_pb2
+import timezone_pb2_grpc
 
 class TimezoneConverterServicer(timezone_pb2_grpc.TimezoneConverterServicer):
     """
@@ -47,3 +48,15 @@ class TimezoneConverterServicer(timezone_pb2_grpc.TimezoneConverterServicer):
             context.set_details(f"Invalid time format. Use 'YYYY-MM-DD HH:MM:SS'.")
             return timezone_pb2.TimeConversionResponse()
 
+
+def serve():
+    """Starts the gRPC server."""
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    timezone_pb2_grpc.add_TimezoneConverterServicer_to_server(TimezoneConverterServicer(), server)
+    server.add_insecure_port('[::]:50051')
+    print("Server starting on port 50051...")
+    server.start()
+    server.wait_for_termination()
+
+if __name__ == '__main__':
+    serve()
