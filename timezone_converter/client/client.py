@@ -21,8 +21,6 @@ def run():
             target_timezone = input('Enter target timezone. Example: America/Bogota: ') or default_target_tz,
         )
 
-        
-
         print(f"------- Sending request to convert {request.time_str} from {request.source_timezone} to {request.target_timezone} ---")
 
 
