@@ -7,10 +7,15 @@ service TimezoneConverter {
     rpc ConvertTime(TimeConversionRequest) returns (TimeConversionResponse){}
 }
 
-message TimeConversionRequest{
+// the number is an unique id for the piece of data 
+
+message TimeConversionRequest {
     string time_str = 1; //exemplo "2025-07-11 23:10:10"
     string source_timezone = 2; //exemplo "America/Sao_Paulo"
     string target_timezone = 3; //exemplo "America/Bogota" 
 }
 
-message
+message TimeConversionResponse {
+    string converted_time = 1;
+    string target_timezone = 2;
+}
