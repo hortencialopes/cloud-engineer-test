@@ -1,6 +1,4 @@
-/*
-Where we'll define input variables to use in the reusable modules
-*/
+/* define the variables used in the module */
 
 variable "region" {}
 variable "project_name" {}
