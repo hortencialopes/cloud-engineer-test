@@ -1,0 +1,3 @@
+/*
+Where we assign our variables values
+*/
