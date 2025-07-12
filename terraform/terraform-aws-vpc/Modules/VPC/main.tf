@@ -36,7 +36,7 @@ resource "aws_subnet" "public_subnet_az1" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "Public Subnet AZ1 - ${self.availability_zone}"
+    Name = "Public Subnet AZ1 - ${data.aws_availability_zones.availability_zones.names[0]}"
   }
 }
 
@@ -47,7 +47,7 @@ resource "aws_subnet" "public_subnet_az2" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "Public Subnet AZ2 - ${self.availability_zone}"
+    Name = "Public Subnet AZ2 - ${data.aws_availability_zones.availability_zones.names[1]}"
   }
 }
 
@@ -82,8 +82,8 @@ resource "aws_subnet" "private_subnet_az1" {
   availability_zone       = aws_subnet.public_subnet_az1.availability_zone
   map_public_ip_on_launch = false
 
-  tags {
-    Name = "Private Subnet AZ1 - ${self.availability_zone}"
+  tags = {
+    Name = "Private Subnet AZ1 - ${aws_subnet.public_subnet_az1.availability_zone}"
   }
 }
 
@@ -93,7 +93,7 @@ resource "aws_subnet" "private_subnet_az2" {
   availability_zone       = aws_subnet.public_subnet_az2.availability_zone
   map_public_ip_on_launch = false
 
-  tags {
-    Name = "Private Subnet AZ2 - ${self.availability_zone}"
+  tags = {
+    Name = "Private Subnet AZ2 - ${aws_subnet.public_subnet_az2.availability_zone}"
   }
 }
