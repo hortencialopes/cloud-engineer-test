@@ -6,7 +6,10 @@ jsonencode helps me with the policies!
 
 resource "aws_iam_role" "cluster"{
 
-    name = "${var.project_name}-${var.cluster_name}-cluster-role"
+    for_each = toset(var.cluster_name)
+    name = "${each.key}-cluster-role"
+
+    #name = "${var.project_name}-${var.cluster_name}-cluster-role"
 
     assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -33,7 +36,8 @@ resource "aws_iam_role_policy_attachment" "cluster_amazon_eks_cluster_policy" {
 
 resource "aws_iam_role" "nodes"{
 
-    name = "${var.project_name}-${var.cluster_name}-node-group-role"
+    for_each = toset(var.cluster_name)
+    name = "${each.key}-nodes-role"
 
     assume_role_policy = jsonencode({
     Version = "2012-10-17"
