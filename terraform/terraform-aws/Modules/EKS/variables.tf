@@ -109,6 +109,25 @@ variable "encrypt_type" {
 }
 
 /*
+CodeBuild vars
+*/
+
+
+variable "codecommit_repo_clone_url_http" {
+  type = string
+  description = "Which repo to fetch the code from"
+  default = null
+}
+
+## repo arn used in iam
+variable "codecommit_repo_arn" {
+  type        = string
+  description = "The ARN of the AWS CodeCommit repository for the application source code."
+}
+
+
+
+/*
 General
 */
 

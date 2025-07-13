@@ -4,6 +4,7 @@ We need to create two iam roles, one for the cluster and another for the node gr
 jsonencode helps me with the policies!
 */
 
+########## CLUSTER IAM ##############
 resource "aws_iam_role" "cluster" {
 
   for_each = toset(var.cluster_name)
@@ -37,6 +38,8 @@ resource "aws_iam_role_policy_attachment" "cluster_amazon_eks_cluster_policy" {
   role       = aws_iam_role.cluster.name
 }
 
+
+########## NODES IAM ################3
 resource "aws_iam_role" "nodes" {
 
   for_each = toset(var.cluster_name)
@@ -227,4 +230,83 @@ resource "aws_iam_role" "aws_load_balancer_controller" {
 resource "aws_iam_role_policy_attachment" "aws_load_balancer_controller" {
   policy_arn = aws_iam_policy.aws_load_balancer_controller.arn
   role       = aws_iam_role.aws_load_balancer_controller.name
+}
+
+########## our pipline roles ##############
+## from official documentation https://docs.aws.amazon.com/codepipeline/latest/userguide/how-to-custom-role.html
+
+resource "aws_iam_role" "codebuild" {
+  name = "${var.project_name}-${var.cluster_name}-codebuild-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "codebuild.amazonaws.com"
+        }
+      },
+    ]
+  })
+
+  tags = var.tags
+}
+
+data "aws_iam_policy_document" "codebuild" {
+  statement {
+    sid    = "CloudWatchLogsPolicy"
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "ECRAuthPolicy"
+    effect = "Allow"
+    actions = [
+      "ecr:GetAuthorizationToken",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "ECRImagePushPolicy"
+    effect = "Allow"
+    actions = [
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload",
+      "ecr:PutImage",
+    ]
+    # This is scoped to the specific ECR repository we created earlier.
+    resources = [for repo in aws_ecr_repository.app : repo.arn]
+  }
+
+  statement {
+    sid    = "CodeCommitSourcePolicy"
+    effect = "Allow"
+    actions = [
+      "codecommit:GitPull"
+    ]
+    # This should be scoped to the ARN of the CodeCommit repository.
+    resources = [var.codecommit_repo_arn]
+  }
+}
+
+resource "aws_iam_policy" "codebuild" {
+  name   = "${var.project_name}-${var.cluster_name}-codebuild-policy"
+  policy = data.aws_iam_policy_document.codebuild.json
+  tags   = var.tags
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild" {
+  role       = aws_iam_role.codebuild.name
+  policy_arn = aws_iam_policy.codebuild.arn
 }
