@@ -41,7 +41,7 @@ resource "aws_iam_role_policy_attachment" "cluster_amazon_eks_cluster_policy" {
 ########## NODES IAM ################3
 resource "aws_iam_role" "nodes" {
 
-  name     = "${var.cluster_name}-nodes-role"
+  name = "${var.cluster_name}-nodes-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -283,7 +283,7 @@ data "aws_iam_policy_document" "codebuild" {
       "ecr:CompleteLayerUpload",
       "ecr:PutImage",
     ]
-    
+
     resources = [
       aws_ecr_repository.ecr.arn,
     ]
@@ -295,7 +295,7 @@ data "aws_iam_policy_document" "codebuild" {
     actions = [
       "eks:DescribeCluster",
     ]
-    
+
     resources = [
       aws_eks_cluster.eks_cluster.arn
     ]

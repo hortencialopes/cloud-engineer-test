@@ -113,9 +113,9 @@ variable "encrypt_type" {
 CodeBuild vars
 */
 variable "code_build_source_type" {
-  type = string
+  type        = string
   description = "Which source to fetch the repo from"
-  default = "GITHUB"
+  default     = "GITHUB"
 }
 
 ## repo arn used in iam
@@ -124,9 +124,9 @@ variable "code_build_source_repo_url" {
   description = "The url of the repo"
 }
 variable "code_build_source_version" {
-  type = string
+  type        = string
   description = "Which branch to fetch the code"
-  default = "main"
+  default     = "main"
 }
 
 
@@ -142,5 +142,5 @@ variable "tags" {
 
 variable "git_hub_token" {
   description = "The token of the git hub"
-  sensitive = true
+  sensitive   = true
 }

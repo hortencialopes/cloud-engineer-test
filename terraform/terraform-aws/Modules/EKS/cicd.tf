@@ -34,12 +34,12 @@ resource "aws_codebuild_project" "app" {
     #priviledgemode is required for building docker images
     privileged_mode = true
 
-     environment_variable {
+    environment_variable {
       name  = "CLUSTER_NAME"
       value = var.cluster_name
     }
 
-     environment_variable {
+    environment_variable {
       name  = "REPOSITORY_URL"
       value = aws_ecr_repository.ecr.repository_url
     }
