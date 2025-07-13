@@ -4,14 +4,14 @@ We need to create two iam roles, one for the cluster and another for the node gr
 jsonencode helps me with the policies!
 */
 
-resource "aws_iam_role" "cluster"{
+resource "aws_iam_role" "cluster" {
 
-    for_each = toset(var.cluster_name)
-    name = "${each.key}-cluster-role"
+  for_each = toset(var.cluster_name)
+  name     = "${each.key}-cluster-role"
 
-    #name = "${var.project_name}-${var.cluster_name}-cluster-role"
+  #name = "${var.project_name}-${var.cluster_name}-cluster-role"
 
-    assume_role_policy = jsonencode({
+  assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
@@ -34,12 +34,12 @@ resource "aws_iam_role_policy_attachment" "cluster_amazon_eks_cluster_policy" {
   role       = aws_iam_role.cluster.name
 }
 
-resource "aws_iam_role" "nodes"{
+resource "aws_iam_role" "nodes" {
 
-    for_each = toset(var.cluster_name)
-    name = "${each.key}-nodes-role"
+  for_each = toset(var.cluster_name)
+  name     = "${each.key}-nodes-role"
 
-    assume_role_policy = jsonencode({
+  assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
@@ -51,7 +51,7 @@ resource "aws_iam_role" "nodes"{
         Action = "sts:AssumeRole"
       },
     ]
-    })
+  })
 
 }
 
@@ -64,7 +64,7 @@ resource "aws_iam_role_policy_attachment" "nodes_policies" {
     "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   ])
 
-  policy_arn = each.key 
+  policy_arn = each.key
   role       = aws_iam_role.nodes.name
 }
 
