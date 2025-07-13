@@ -1,39 +1,17 @@
-# /root/main.tf
-
-# Provider for the Virginia region
 provider "aws" {
-  alias  = "us-east-1"
-  region = "us-east-1"
+  region  = var.region
+  profile = "terraform-profile"
 }
 
-# Provider for the Ireland region
-provider "aws" {
-  alias  = "eu-west-1"
-  region = "eu-west-1"
-}
-
-# Deploy the EKS module in Virginia
-module "eks_us_east_1" {
-  source = "./modules/eks"
-  providers = {
-    aws = aws.us-east-1
-  }
-  
-  # ... other variables for the us-east-1 cluster
-  region              = "us-east-1"
-  remote_state_bucket = "networking-state-bucket-use1"
-  # ...
-}
-
-# Deploy the EKS module in Ireland
-module "eks_eu_west_1" {
-  source = "./modules/eks"
-  providers = {
-    aws = aws.eu-west-1
-  }
-
-  # ... other variables for the eu-west-1 cluster
-  region              = "eu-west-1"
-  remote_state_bucket = "networking-state-bucket-euw1"
-  # ...
+module "eks" {
+  source              = "../modules/eks"
+  region              = var.region
+  project_name        = var.project_name
+  remote_state_bucket = var.remote_state_bucket
+  remote_state_key    = var.remote_state_key
+  remote_state_region = var.remote_state_region
+  code_build_source_type = var.code_build_source_type
+  code_build_source_repo_url = var.code_build_source_repo_url
+  code_build_source_version = var.code_build_source_version
+  ecr_name = var.ecr_name
 }

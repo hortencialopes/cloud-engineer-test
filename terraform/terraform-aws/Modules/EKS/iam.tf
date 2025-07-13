@@ -7,8 +7,7 @@ jsonencode helps me with the policies!
 ########## CLUSTER IAM ##############
 resource "aws_iam_role" "cluster" {
 
-  for_each = toset(var.cluster_name)
-  name     = "${each.key}-cluster-role"
+  name = "${var.cluster_name}-cluster-role"
 
   #name = "${var.project_name}-${var.cluster_name}-cluster-role"
 
@@ -42,8 +41,7 @@ resource "aws_iam_role_policy_attachment" "cluster_amazon_eks_cluster_policy" {
 ########## NODES IAM ################3
 resource "aws_iam_role" "nodes" {
 
-  for_each = toset(var.cluster_name)
-  name     = "${each.key}-nodes-role"
+  name     = "${var.cluster_name}-nodes-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -82,7 +80,7 @@ https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/i
 
 #gets the oidc issuer to create the trustpolicy
 data "aws_iam_openid_connect_provider" "cluster_oidc" {
-  url = aws_eks_cluster.cluster.identity[0].oidc[0].issuer
+  url = aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer
 }
 
 data "aws_iam_policy_document" "aws_load_balancer_controller" {
@@ -92,7 +90,7 @@ data "aws_iam_policy_document" "aws_load_balancer_controller" {
       "iam:CreateServiceLinkedRole",
     ]
     resources = ["*"]
-    conditions {
+    condition {
       test     = "StringEquals"
       variable = "iam:AWSServiceName"
       values   = ["elasticloadbalancing.amazonaws.com"]
@@ -285,18 +283,10 @@ data "aws_iam_policy_document" "codebuild" {
       "ecr:CompleteLayerUpload",
       "ecr:PutImage",
     ]
-    # This is scoped to the specific ECR repository we created earlier.
-    resources = [for repo in aws_ecr_repository.app : repo.arn]
-  }
-
-  statement {
-    sid    = "CodeCommitSourcePolicy"
-    effect = "Allow"
-    actions = [
-      "codecommit:GitPull"
+    
+    resources = [
+      aws_ecr_repository.ecr.arn,
     ]
-    # This should be scoped to the ARN of the CodeCommit repository.
-    resources = [var.codecommit_repo_arn]
   }
 }
 

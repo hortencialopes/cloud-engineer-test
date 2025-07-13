@@ -1,3 +1,0 @@
-/*
-    Version files for version control
- */

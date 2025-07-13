@@ -1,4 +1,23 @@
 /*
+My data vars
+*/
+
+variable "remote_state_bucket" {
+  type        = string
+  description = "The bucket I need to fetch the networking state from"
+}
+
+variable "remote_state_key" {
+  type        = string
+  description = "The key of the state file"
+}
+
+variable "remote_state_region" {
+  type        = string
+  description = "The region my remote state is"
+}
+
+/*
 Cluster essentials
 */
 
@@ -69,35 +88,22 @@ variable "node_group_min_size" {
   default     = 1
 }
 
-/*
-Remote state vars
-*/
-
-variable "remote_state_bucket" {
-  type        = string
-  description = "The name of the S3 bucket of the networking module state"
-}
-
-variable "remote_state_key" {
-  type        = string
-  description = "The path (key) to the networking state file within the S3 bucket (e.g., 'network/terraform.tfstate')."
-}
 
 /*
 ECR vars
 */
-variable "ecr_names" {
-  type        = list(string)
-  description = "The names of the ECRs registries."
+variable "ecr_name" {
+  type        = string
+  description = "The name of the ECRs registries."
   default     = null
 }
 
-variable "image_mutability" {
+variable "image_tag_mutability" {
   type        = string
   description = "Provide image mutability."
   default     = "IMMUTABLE"
   validation {
-    condition     = contains(["MUTABLE", "IMMUTABLE"], var.image_mutability)
+    condition     = contains(["MUTABLE", "IMMUTABLE"], var.image_tag_mutability)
     error_message = "The image_tag_mutability must be either MUTABLE or IMMUTABLE."
   }
 }
@@ -111,26 +117,27 @@ variable "encrypt_type" {
 /*
 CodeBuild vars
 */
-
-
-variable "codecommit_repo_clone_url_http" {
+variable "code_build_source_type" {
   type = string
-  description = "Which repo to fetch the code from"
-  default = null
+  description = "Which source to fetch the repo from"
+  default = "GITHUB"
 }
 
 ## repo arn used in iam
-variable "codecommit_repo_arn" {
+variable "code_build_source_repo_url" {
   type        = string
-  description = "The ARN of the AWS CodeCommit repository for the application source code."
+  description = "The url of the repo"
 }
-
+variable "code_build_source_version" {
+  type = string
+  description = "Which branch to fetch the code"
+  default = "main"
+}
 
 
 /*
 General
 */
-
 variable "tags" {
   description = "The key-value maps for tagging"
   type        = map(string)

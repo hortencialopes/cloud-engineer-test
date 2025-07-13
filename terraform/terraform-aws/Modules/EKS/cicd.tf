@@ -8,10 +8,21 @@ resource "aws_codebuild_project" "app" {
   build_timeout = 5
   service_role  = aws_iam_role.codebuild.arn
 
+  # source {
+  #   type     = "CODECOMMIT"
+  #   location = var.codecommit_repo_clone_url_http
+  # }
+
   source {
-    type     = "CODECOMMIT"
-    location = var.codecommit_repo_clone_url_http
+    type      = var.code_build_source_type
+    location  = var.code_build_source_repo_url
+    # Optional: Configure Git submodules and source version
+    git_submodules_config {
+      fetch_submodules = true
+    }
   }
+
+  source_version = var.code_build_source_version
 
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
@@ -22,10 +33,16 @@ resource "aws_codebuild_project" "app" {
     #priviledgemode is required for building docker images
     privileged_mode = true
 
-    environment_variable {
-      name  = "REPOSITORY_URI"
-      value = aws_ecr_repository.app[var.ecr_repository_names[0]].repository_url
+     environment_variable {
+      name  = "CLUSTER_NAME"
+      value = var.cluster_name
     }
+
+     environment_variable {
+      name  = "REPOSITORY_URL"
+      value = aws_ecr_repository.ecr.repository_url
+    }
+
     environment_variable {
       name  = "AWS_DEFAULT_REGION"
       value = var.region
