@@ -29,13 +29,12 @@ variable "project_name" {
 variable "cluster_name" {
   type        = string
   description = "The name of the EKS cluster."
-  default     = "primary-cluster"
 }
 
 variable "cluster_version" {
   type        = string
   description = "The Kubernetes version for the EKS cluster."
-  default     = "1.33"
+  default     = "1.30"
 }
 
 variable "region" {
@@ -92,11 +91,7 @@ variable "node_group_min_size" {
 /*
 ECR vars
 */
-variable "ecr_name" {
-  type        = string
-  description = "The name of the ECRs registries."
-  default     = null
-}
+
 
 variable "image_tag_mutability" {
   type        = string
@@ -142,4 +137,10 @@ variable "tags" {
   description = "The key-value maps for tagging"
   type        = map(string)
   default     = {}
+}
+
+
+variable "git_hub_token" {
+  description = "The token of the git hub"
+  sensitive = true
 }

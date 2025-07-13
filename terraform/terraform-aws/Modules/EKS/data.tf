@@ -1,8 +1,4 @@
-
-/*
-I need to acces the remote state of my networking infrastructure
-*/
-data "terraform_remote_state" "network" {
+data "terraform_remote_state" "networking" {
   backend = "s3"
 
   config = {

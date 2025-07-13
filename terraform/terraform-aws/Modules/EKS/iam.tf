@@ -288,6 +288,18 @@ data "aws_iam_policy_document" "codebuild" {
       aws_ecr_repository.ecr.arn,
     ]
   }
+
+  statement {
+    sid    = "EKSDescribeClusterPolicy"
+    effect = "Allow"
+    actions = [
+      "eks:DescribeCluster",
+    ]
+    
+    resources = [
+      aws_eks_cluster.eks_cluster.arn
+    ]
+  }
 }
 
 resource "aws_iam_policy" "codebuild" {

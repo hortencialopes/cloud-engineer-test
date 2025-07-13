@@ -4,7 +4,6 @@ https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks
 https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster
 */
 
-
 resource "aws_eks_cluster" "eks_cluster" {
   name     = var.cluster_name
   role_arn = aws_iam_role.cluster.arn
@@ -12,10 +11,10 @@ resource "aws_eks_cluster" "eks_cluster" {
 
   vpc_config {
     subnet_ids = [
-      data.terraform_remote_state.network.outputs.public_subnet_az1_id,
-      data.terraform_remote_state.network.outputs.public_subnet_az2_id,
-      data.terraform_remote_state.network.outputs.private_subnet_az1_id,
-      data.terraform_remote_state.network.outputs.private_subnet_az2_id
+      data.terraform_remote_state.networking.outputs.networking_output.public_subnet_az1_id,
+      data.terraform_remote_state.networking.outputs.networking_output.public_subnet_az2_id,
+      data.terraform_remote_state.networking.outputs.networking_output.private_subnet_az1_id,
+      data.terraform_remote_state.networking.outputs.networking_output.private_subnet_az2_id
     ]
     # This ensures that the ALB created by the AWS Load Balancer Controller
     # can communicate with the cluster.
@@ -37,8 +36,8 @@ resource "aws_eks_node_group" "eks_node_group" {
   node_role_arn   = aws_iam_role.nodes.arn
 
   subnet_ids = [
-    data.terraform_remote_state.network.outputs.private_subnet_az1_id,
-    data.terraform_remote_state.network.outputs.private_subnet_az2_id
+    data.terraform_remote_state.networking.outputs.networking_output.private_subnet_az1_id,
+    data.terraform_remote_state.networking.outputs.networking_output.private_subnet_az2_id
   ]
 
   instance_types = var.node_group_instance_types

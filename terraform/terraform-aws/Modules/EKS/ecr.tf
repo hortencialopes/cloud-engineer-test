@@ -5,7 +5,7 @@
 
 resource "aws_ecr_repository" "ecr" {
   
-  name             = "${var.ecr_name}-ecr-repo"
+  name             = "${var.project_name}-ecr-repo"
 
   image_tag_mutability  = var.image_tag_mutability
 
@@ -26,7 +26,7 @@ resource "aws_ecr_lifecycle_policy" "ecr_policy" {
         "selection" : {
           "tagStatus" : "any",
           "countType" : "imageCountMoreThan",
-          "countNumber" : 30
+          "countNumber" : 20
         },
         "action" : {
           "type" : "expire"

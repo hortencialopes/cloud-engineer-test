@@ -13,5 +13,11 @@ module "eks" {
   code_build_source_type = var.code_build_source_type
   code_build_source_repo_url = var.code_build_source_repo_url
   code_build_source_version = var.code_build_source_version
-  ecr_name = var.ecr_name
+  cluster_name = var.cluster_name
+  git_hub_token = var.git_hub_token
 }
+
+output "eks_output" {  
+  value = module.eks
+}
+

@@ -16,6 +16,7 @@ resource "aws_codebuild_project" "app" {
   source {
     type      = var.code_build_source_type
     location  = var.code_build_source_repo_url
+    buildspec = "buildspec.yml"
     # Optional: Configure Git submodules and source version
     git_submodules_config {
       fetch_submodules = true
@@ -55,4 +56,16 @@ resource "aws_codebuild_project" "app" {
 
   tags = var.tags
 
+}
+
+
+##Tried retrieving the secret but got tons of permissions error even changin the policies
+# data "aws_secretsmanager_secret_version" "github" {
+#   secret_id = "arn:aws:secretsmanager:sa-east-1:178173414584:secret:github-qpHOO6"
+# }
+
+resource "aws_codebuild_source_credential" "github" {
+  auth_type   = "PERSONAL_ACCESS_TOKEN"
+  server_type = "GITHUB"
+  token       = var.git_hub_token
 }

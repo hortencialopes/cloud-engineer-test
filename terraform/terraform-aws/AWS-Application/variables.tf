@@ -11,4 +11,5 @@ variable "remote_state_region" {}
 variable "code_build_source_type" {}
 variable "code_build_source_repo_url" {}
 variable "code_build_source_version" {}
-variable "ecr_name" {}
+variable "cluster_name" {}
+variable "git_hub_token" {}
