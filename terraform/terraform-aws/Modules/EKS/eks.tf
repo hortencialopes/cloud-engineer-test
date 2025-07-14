@@ -124,3 +124,18 @@ resource "kubernetes_config_map_v1" "aws_auth" {
     aws_iam_role.codebuild,
   ]
 }
+
+##creating the service account for the alb inside kube-system
+resource "kubernetes_service_account_v1" "aws_load_balancer_controller" {
+  metadata {
+    name      = "${var.project_name}-${var.cluster_name}-alb-controller-role" # This name must match your Helm command
+    namespace = "kube-system"
+    annotations = {
+      # This is the corrected annotation. It uses the ARN from the actual IAM role resource.
+      "eks.amazonaws.com/role-arn" = aws_iam_role.aws_load_balancer_controller.arn
+    }
+  }
+
+  # Add a dependency to ensure the IAM role exists before creating this.
+  depends_on = [aws_iam_role.aws_load_balancer_controller]
+}

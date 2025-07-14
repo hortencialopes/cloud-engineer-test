@@ -90,8 +90,10 @@ resource "aws_iam_openid_connect_provider" "cluster_oidc" {
   url             = aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer
 
   tags = {
-    Name = "${var.cluster_name}-oidc-provider" # Optional: Add a descriptive tag
+    Name = "${var.cluster_name}-oidc-provider" 
   }
+  
+  depends_on = [aws_eks_cluster.eks_cluster]
 }
 
 data "aws_iam_policy_document" "aws_load_balancer_controller" {
@@ -198,6 +200,7 @@ data "aws_iam_policy_document" "aws_load_balancer_controller" {
     ]
     resources = ["*"]
   }
+  
 }
 
 resource "aws_iam_policy" "aws_load_balancer_controller" {
@@ -226,7 +229,7 @@ resource "aws_iam_role" "aws_load_balancer_controller" {
         Condition = {
           StringEquals = {
             # This condition scopes the trust to the specific service account of the controller.
-            "${replace(aws_iam_openid_connect_provider.cluster_oidc.url, "https://", "")}:sub" = "system:serviceaccount:kube-system:aws-load-balancer-controller"
+            "${replace(aws_iam_openid_connect_provider.cluster_oidc.url, "https://", "")}:sub" = "system:serviceaccount:kube-system:${var.project_name}-${var.cluster_name}-alb-controller-role"
           }
         }
       }

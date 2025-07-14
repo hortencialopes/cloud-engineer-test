@@ -150,3 +150,15 @@ variable "admin_user_arns" {
   type        = list(string)
   default     = []
 }
+
+variable "hosted_zone_name" {
+  description = "A unique name for your test domain's hosted zone."
+  type        = string
+  default     = "simetrik-test-by-horta.com"
+}
+
+variable "subdomain_name" {
+  description = "The subdomain for the certificate (e.g., 'grpc')."
+  type        = string
+  default     = "grpc"
+}

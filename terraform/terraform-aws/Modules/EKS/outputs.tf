@@ -28,3 +28,10 @@ output "codebuild_project_name" {
   value       = aws_codebuild_project.app.name
 }
 
+output "alb_controller_role" {
+  value = kubernetes_service_account_v1.aws_load_balancer_controller
+}
+
+output "certificate" {
+  value = aws_acm_certificate.cert.arn
+}
