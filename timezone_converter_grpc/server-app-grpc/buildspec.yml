@@ -1,0 +1,50 @@
+version: 0.2
+
+env:
+  secrets-manager:
+    # This tells CodeBuild to fetch the secret named "dockerhub-credentials"
+    DOCKERHUB_USERNAME: "dockerhub-credentials:username"
+    DOCKERHUB_PASSWORD: "dockerhub-credentials:password"
+
+phases:
+  install:
+    commands:
+      - echo "Installing kubectl..."
+      - curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.28.5/2024-01-04/bin/linux/amd64/kubectl
+      - chmod +x ./kubectl
+      - mv ./kubectl /usr/local/bin/kubectl
+
+  pre_build:
+    commands:
+      - echo "Logging in to Docker Hub..."
+      - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+
+      - echo "Configuring kubectl..."
+      - aws eks update-kubeconfig --name $CLUSTER_NAME --region $AWS_DEFAULT_REGION
+
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $REPOSITORY_URL
+
+  build:
+    commands:
+      - echo "Build started on `date`"
+      - echo "Building the Docker image..."
+      # We'll use two tags: 'latest' for easy reference, and the Git commit hash for unique versioning.
+      # The CODEBUILD_RESOLVED_SOURCE_VERSION is a built-in CodeBuild variable containing the commit ID.
+      - IMAGE_TAG=${CODEBUILD_RESOLVED_SOURCE_VERSION:-latest}
+      - docker build -t $REPOSITORY_URL:latest .
+      - docker tag $REPOSITORY_URL:latest $REPOSITORY_URL:$IMAGE_TAG
+
+  post_build:
+    commands:
+      # The post_build phase is for final steps, like pushing artifacts and deploying.
+      - echo "Build completed on `date`"
+      - echo "Pushing the Docker images to ECR..."
+      
+      - docker push $REPOSITORY_URL:$IMAGE_TAG
+      - echo "Deploying the new image to EKS..."
+      # This is the final step. We tell Kubernetes to update our application's deployment
+      # with the new, unique image tag we just pushed.
+
+      - kubectl set image deployment/server-grpc-deployment server-grpc-container=$REPOSITORY_URL:$IMAGE_TAG
+      - echo "Deployment triggered successfully!"
