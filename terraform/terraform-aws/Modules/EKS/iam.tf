@@ -79,8 +79,19 @@ https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/i
 */
 
 #gets the oidc issuer to create the trustpolicy
-data "aws_iam_openid_connect_provider" "cluster_oidc" {
+
+data "tls_certificate" "eks_cluster" {
   url = aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer
+}
+
+resource "aws_iam_openid_connect_provider" "cluster_oidc" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = [data.tls_certificate.eks_cluster.certificates[0].sha1_fingerprint]
+  url             = aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer
+
+  tags = {
+    Name = "${var.cluster_name}-oidc-provider" # Optional: Add a descriptive tag
+  }
 }
 
 data "aws_iam_policy_document" "aws_load_balancer_controller" {
@@ -209,13 +220,13 @@ resource "aws_iam_role" "aws_load_balancer_controller" {
       {
         Effect = "Allow",
         Principal = {
-          Federated = data.aws_iam_openid_connect_provider.cluster_oidc.arn
+          Federated = aws_iam_openid_connect_provider.cluster_oidc.arn
         },
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
             # This condition scopes the trust to the specific service account of the controller.
-            "${replace(data.aws_iam_openid_connect_provider.cluster_oidc.url, "https://", "")}:sub" = "system:serviceaccount:kube-system:aws-load-balancer-controller"
+            "${replace(aws_iam_openid_connect_provider.cluster_oidc.url, "https://", "")}:sub" = "system:serviceaccount:kube-system:aws-load-balancer-controller"
           }
         }
       }

@@ -10,6 +10,7 @@ Meeting some ingress criterias for deploying the apps to eks: https://docs.aws.a
 # Creating our vpc
 
 resource "aws_vpc" "vpc" {
+  region               = var.region
   cidr_block           = var.vpc_cidr
   instance_tenancy     = "default"
   enable_dns_support   = true
