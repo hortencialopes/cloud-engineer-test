@@ -311,6 +311,16 @@ data "aws_iam_policy_document" "codebuild" {
       aws_eks_cluster.eks_cluster.arn
     ]
   }
+  statement {
+    sid    = "DockerHubSecretAccess"
+    effect = "Allow"
+    actions = [
+      "secretsmanager:GetSecretValue",
+    ]
+    resources = [
+      "arn:aws:secretsmanager:us-east-1:178173414584:secret:dockerhub-credentials-sJdJZ6" 
+    ]
+  }
 }
 
 resource "aws_iam_policy" "codebuild" {

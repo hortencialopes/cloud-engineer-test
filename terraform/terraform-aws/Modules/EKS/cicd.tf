@@ -69,3 +69,23 @@ resource "aws_codebuild_source_credential" "github" {
   server_type = "GITHUB"
   token       = var.git_hub_token
 }
+
+
+/**
+https://docs.aws.amazon.com/codebuild/latest/userguide/github-webhook.html
+*/
+resource "aws_codebuild_webhook" "github_trigger" {
+  project_name = aws_codebuild_project.app.name
+  build_type   = "BUILD"
+  filter_group {
+    filter {
+      type    = "EVENT"
+      pattern = "PUSH"
+    }
+
+    filter {
+      type    = "HEAD_REF"
+      pattern = "refs/heads/main"
+    }
+  }
+}
