@@ -10,3 +10,34 @@ Here's a breakdown of what you'll find:
 - **[Scripts](./scripts/):** To meet the requirement of using an Application Load Balancer, I created a script (not in plural, sadly) to install the `aws-load-balancer-controller` inside the EKS cluster. You can find it in this directory.
 - **[Deliverables](./deliverables/):** All the required deliverables, including the architecture diagram and the documentation in PDF format, are located here.
 
+---
+
+## Table of Contents
+
+EDIT EDIT EDIT EDIT
+- [Project Overview](#project-overview)
+- [Architecture Diagram](#architecture-diagram)
+- [Networking Explanation](#networking-explanation)
+- [Deployment Guide](#deployment-guide)
+  - [Prerequisites](#prerequisites)
+  - [Deploying the Infrastructure](#deploying-the-infrastructure)
+  - [Deploying the Application](#deploying-the-application)
+  - [Testing the Application](#testing-the-application)
+- [Destroying the Infrastructure](#destroying-the-infrastructure)
+
+---
+
+## Project Overview
+
+The goal of this project is to deploy a containerized gRPC server application onto a secure and scalable EKS cluster. The entire infrastructure is defined as code using reusable Terraform modules, and the application deployment is fully automated via a CI/CD pipeline using AWS CodeBuild.
+
+**Key Features:**
+- **Infrastructure as Code (IaC):** All AWS resources are managed by Terraform, ensuring repeatability and version control. 
+- **title to highlight state preservation** The state of the infrastructure deployed is preserved in remotely in S3 buckets
+- **Reusable Modules:** The infrastructure is split into a `networking` module and an `eks` module for maximum reusability across different environments - you can reuse the `ec2` module if you want also.
+- **Containerization:** The application is containerized with Docker and stored in a secure AWS ECR repository.
+- **Kubernetes Orchestration:** Amazon EKS is used to manage, scale, and ensure the high availability of the application.
+- **CI/CD Automation:** A CodeBuild pipeline automatically builds and deploys the application to EKS upon every push to the `main` branch.
+- **Secure Exposure:** The application is securely exposed to the internet via an Application Load Balancer (ALB) using an HTTPS listener and a TLS certificate managed by ACM.
+
+---
