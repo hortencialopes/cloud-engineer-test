@@ -2,6 +2,7 @@
 Store the terraform state in s3 bucket and the lock with DynamoDB table
 */
 
+# #cluster 
 terraform {
   backend "s3" {
     bucket         = "insert your bucket name"
