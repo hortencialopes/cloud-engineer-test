@@ -15,6 +15,7 @@ module "eks" {
   code_build_source_version  = var.code_build_source_version
   cluster_name               = var.cluster_name
   git_hub_token              = var.git_hub_token
+  admin_user_arns            = [var.admin_user_arn]
 }
 
 output "eks_output" {

@@ -60,3 +60,67 @@ resource "aws_eks_node_group" "eks_node_group" {
 
   tags = var.tags
 }
+
+data "aws_eks_cluster_auth" "cluster" {
+  name = var.cluster_name
+}
+
+#My pipeline needs to interact with the cluster so adding provider to interact with the EKS cluster
+provider "kubernetes" {
+  host                   = aws_eks_cluster.eks_cluster.endpoint
+  cluster_ca_certificate = base64decode(aws_eks_cluster.eks_cluster.certificate_authority[0].data)
+
+  token = data.aws_eks_cluster_auth.cluster.token
+  # This uses the credentials of the identity running Terraform to get a token
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    args        = ["eks", "get-token", "--cluster-name", aws_eks_cluster.eks_cluster.name]
+    command     = "aws"
+  }
+}
+
+# This resource will manage the aws-auth ConfigMap within Kubernetes
+resource "kubernetes_config_map_v1" "aws_auth" {
+  metadata {
+    name      = "aws-auth"
+    namespace = "kube-system"
+  }
+
+  data = {
+    
+    mapRoles = yamlencode([
+      {
+        rolearn  = aws_iam_role.nodes.arn
+        username = "system:node:{{EC2PrivateDNSName}}"
+        groups   = [
+          "system:bootstrappers",
+          "system:nodes",
+        ]
+      },
+      # This new entry grants my CodeBuild role permissions within the cluster.
+      {
+        rolearn  = aws_iam_role.codebuild.arn
+        username = "codebuild-service-role" 
+        groups = [
+          "system:masters" 
+        ]
+      }
+    ])
+
+    mapUsers = yamlencode(
+      [for user_arn in var.admin_user_arns : {
+        userarn  = user_arn
+        username = split("/", user_arn)[1]
+        groups   = [
+          "system:masters"
+        ]
+      }]
+    )
+  }
+
+  # This ensures that the ConfigMap is updated only after the roles are created.
+  depends_on = [
+    aws_iam_role.nodes,
+    aws_iam_role.codebuild,
+  ]
+}

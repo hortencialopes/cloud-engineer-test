@@ -144,3 +144,9 @@ variable "git_hub_token" {
   description = "The token of the git hub"
   sensitive   = true
 }
+
+variable "admin_user_arns" {
+  description = "A list of IAM User ARNs to grant cluster administrator access."
+  type        = list(string)
+  default     = []
+}

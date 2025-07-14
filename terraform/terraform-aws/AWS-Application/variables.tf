@@ -13,3 +13,4 @@ variable "code_build_source_repo_url" {}
 variable "code_build_source_version" {}
 variable "cluster_name" {}
 variable "git_hub_token" {}
+variable "admin_user_arn" {}
