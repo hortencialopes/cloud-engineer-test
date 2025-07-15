@@ -8,7 +8,7 @@ Here's a breakdown of what you'll find:
 - **[Terraform Modules](./terraform/modules/):** Here you can find the two reusable required Terraform modules I created. The `networking` module sets up the VPC and subnets, while the `eks` module handles the deployment of the EKS cluster, CI/CD pipeline, and all related resources - each infrastructure necessary is in a separate .tf file. There's also a third module, `ec2`, that I used to deploy the client side application to test the server app. 
 - **[Terraform Deployments](./terraform/):** Separated each deployment into its own root directory to manage each environment's remote state independently. 
 - **[Scripts](./scripts/):** To meet the requirement of using an Application Load Balancer, I created a script to install the `aws-load-balancer-controller` inside the EKS cluster. You can find it in this directory.
-- **[Deliverables](./deliverables/):** All the required deliverables, including the architecture diagram and the documentation in PDF format, are located here.
+- **[Deliverables](./deliverables/):** This directory contains all the final deliverables for the project. Inside, you'll find the `architecture_diagrams`, the `state_files` for the deployed infrastructure, a collection of `deployment_screenshots` as evidence, and the final `Deployed Infrastructure - Cloud Engineer Test for Simetrik.pdf` which combines this documentation with the visual evidence.
 
 ---
 
@@ -43,13 +43,15 @@ The goal of this project is to deploy a containerized gRPC server application on
 
 ## Architecture Diagram
 
-Bellow are the diagrams for the Networking architecture and the Application architecture:
+Bellow are the diagrams for the Networking architecture: 
 
 ![Screenshot of the Networking architecture.](/deliverables/architecture_diagrams/networking-architecture-diagram.PNG)
 
+And the Application architecture:
+
 ![Screenshot of the Application architecture](/deliverables/architecture_diagrams/eks-architecture-diagram.PNG)
 
-*Note: the diagrams were generated based on the state files by app.eraser.io/ - unfortunately I wasn't able to build from scratch due to some time management issues*
+*Note: the diagrams were generated based on the state files by app.eraser.io/ - unfortunately I wasn't able to build from scratch due to time*
 
 The core architecture for this project is deployed in `us-east-1`, where the server application runs on an EKS cluster. To simplify testing and keep costs low, I've configured the client application to run from a simple EC2 instance within the same environment.
 
