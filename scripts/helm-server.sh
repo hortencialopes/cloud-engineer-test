@@ -1,3 +1,6 @@
+echo "Define your alb service acc before running this script"
+export ALB_SERVICE_ACCOUNT_NAME="CHANGE HERE"
+
 echo "Adding EKS chart repository..."
 helm repo add eks https://aws.github.io/eks-charts
 
