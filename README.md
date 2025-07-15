@@ -43,6 +43,14 @@ The goal of this project is to deploy a containerized gRPC server application on
 
 ## Architecture Diagram
 
+Bellow are the diagrams for the Networking architecture and the Application architecture:
+
+![Screenshot of the Networking architecture.](/deliverables/architecture_diagrams/networking-architecture-diagram.PNG)
+
+![Screenshot of the Application architecture](/deliverables/architecture_diagrams/eks-architecture-diagram.PNG)
+
+*Note: the diagrams were generated based on the state files by app.eraser.io/ - unfortunately I wasn't able to build from scratch due to some time management issues*
+
 The core architecture for this project is deployed in `us-east-1`, where the server application runs on an EKS cluster. To simplify testing and keep costs low, I've configured the client application to run from a simple EC2 instance within the same environment.
 
 **Core Components:**

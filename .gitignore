@@ -214,7 +214,7 @@ __marimo__/
 
 # .tfstate files
 *.tfstate
-*.tfstate.*
+
 
 # Crash log files
 crash.log
