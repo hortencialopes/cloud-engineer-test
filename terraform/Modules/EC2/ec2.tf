@@ -42,7 +42,7 @@ resource "aws_instance" "grpc_client" {
   vpc_security_group_ids = [aws_security_group.client_sg.id]
   associate_public_ip_address = true
   
-  key_name = "horta-ec2-key-pair" 
+  key_name = var.key_name 
 
   user_data = <<-EOF
               #!/bin/bash

@@ -1,0 +1,861 @@
+{
+  "version": 4,
+  "terraform_version": "1.12.2",
+  "serial": 18,
+  "lineage": "2aebe2a1-0bdf-bb48-f8e5-d19ca5c1003d",
+  "outputs": {
+    "networking_output": {
+      "value": {
+        "internet_gateway": {
+          "arn": "arn:aws:ec2:us-east-1:178173414584:internet-gateway/igw-01f19a6e395b52012",
+          "id": "igw-01f19a6e395b52012",
+          "owner_id": "178173414584",
+          "region": "us-east-1",
+          "tags": {
+            "Name": "Simetrik Server-IGW"
+          },
+          "tags_all": {
+            "Name": "Simetrik Server-IGW"
+          },
+          "timeouts": null,
+          "vpc_id": "vpc-05b522b0ea4d5fee6"
+        },
+        "nat_gateway_az1": "nat-06fe1529b30f27e5d",
+        "nat_gateway_az2": "nat-07a50281bac4a5341",
+        "private_subnet_az1_id": "subnet-07b8b9da40a92922e",
+        "private_subnet_az2_id": "subnet-0cdff6c52e88c1579",
+        "project_name": "Simetrik Server",
+        "public_subnet_az1_id": "subnet-0de78b3478a9d64d9",
+        "public_subnet_az2_id": "subnet-01eb0b0d03efee9ec",
+        "region": "us-east-1",
+        "vpc_id": "vpc-05b522b0ea4d5fee6"
+      },
+      "type": [
+        "object",
+        {
+          "internet_gateway": [
+            "object",
+            {
+              "arn": "string",
+              "id": "string",
+              "owner_id": "string",
+              "region": "string",
+              "tags": [
+                "map",
+                "string"
+              ],
+              "tags_all": [
+                "map",
+                "string"
+              ],
+              "timeouts": [
+                "object",
+                {
+                  "create": "string",
+                  "delete": "string",
+                  "update": "string"
+                }
+              ],
+              "vpc_id": "string"
+            }
+          ],
+          "nat_gateway_az1": "string",
+          "nat_gateway_az2": "string",
+          "private_subnet_az1_id": "string",
+          "private_subnet_az2_id": "string",
+          "project_name": "string",
+          "public_subnet_az1_id": "string",
+          "public_subnet_az2_id": "string",
+          "region": "string",
+          "vpc_id": "string"
+        }
+      ]
+    }
+  },
+  "resources": [
+    {
+      "module": "module.networking",
+      "mode": "data",
+      "type": "aws_availability_zones",
+      "name": "availability_zones",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "all_availability_zones": null,
+            "exclude_names": null,
+            "exclude_zone_ids": null,
+            "filter": null,
+            "group_names": [
+              "us-east-1-zg-1"
+            ],
+            "id": "us-east-1",
+            "names": [
+              "us-east-1a",
+              "us-east-1b",
+              "us-east-1c",
+              "us-east-1d",
+              "us-east-1e",
+              "us-east-1f"
+            ],
+            "region": "us-east-1",
+            "state": null,
+            "timeouts": null,
+            "zone_ids": [
+              "use1-az2",
+              "use1-az4",
+              "use1-az6",
+              "use1-az1",
+              "use1-az3",
+              "use1-az5"
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_eip",
+      "name": "eip_for_nat_gateway_az1",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address": null,
+            "allocation_id": "eipalloc-003985c488ad4a27e",
+            "arn": "arn:aws:ec2:us-east-1:178173414584:elastic-ip/eipalloc-003985c488ad4a27e",
+            "associate_with_private_ip": null,
+            "association_id": "eipassoc-083a8f24b06e8f675",
+            "carrier_ip": "",
+            "customer_owned_ip": "",
+            "customer_owned_ipv4_pool": "",
+            "domain": "vpc",
+            "id": "eipalloc-003985c488ad4a27e",
+            "instance": "",
+            "ipam_pool_id": null,
+            "network_border_group": "us-east-1",
+            "network_interface": "eni-05f24318a800d95f2",
+            "private_dns": "ip-10-0-0-209.ec2.internal",
+            "private_ip": "10.0.0.209",
+            "ptr_record": "",
+            "public_dns": "ec2-35-168-35-87.compute-1.amazonaws.com",
+            "public_ip": "35.168.35.87",
+            "public_ipv4_pool": "amazon",
+            "region": "us-east-1",
+            "tags": {
+              "Name": "Nat Gateway AZ1 EIP"
+            },
+            "tags_all": {
+              "Name": "Nat Gateway AZ1 EIP"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiZGVsZXRlIjoxODAwMDAwMDAwMDAsInJlYWQiOjkwMDAwMDAwMDAwMCwidXBkYXRlIjozMDAwMDAwMDAwMDB9LCJzY2hlbWFfdmVyc2lvbiI6IjAifQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_eip",
+      "name": "eip_for_nat_gateway_az2",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address": null,
+            "allocation_id": "eipalloc-0f13203931445dc70",
+            "arn": "arn:aws:ec2:us-east-1:178173414584:elastic-ip/eipalloc-0f13203931445dc70",
+            "associate_with_private_ip": null,
+            "association_id": "eipassoc-0515af80d75cb6a05",
+            "carrier_ip": "",
+            "customer_owned_ip": "",
+            "customer_owned_ipv4_pool": "",
+            "domain": "vpc",
+            "id": "eipalloc-0f13203931445dc70",
+            "instance": "",
+            "ipam_pool_id": null,
+            "network_border_group": "us-east-1",
+            "network_interface": "eni-0d2fb3d27f8713883",
+            "private_dns": "ip-10-0-1-129.ec2.internal",
+            "private_ip": "10.0.1.129",
+            "ptr_record": "",
+            "public_dns": "ec2-52-2-67-131.compute-1.amazonaws.com",
+            "public_ip": "52.2.67.131",
+            "public_ipv4_pool": "amazon",
+            "region": "us-east-1",
+            "tags": {
+              "Name": "Nat Gateway AZ2 EIP"
+            },
+            "tags_all": {
+              "Name": "Nat Gateway AZ2 EIP"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiZGVsZXRlIjoxODAwMDAwMDAwMDAsInJlYWQiOjkwMDAwMDAwMDAwMCwidXBkYXRlIjozMDAwMDAwMDAwMDB9LCJzY2hlbWFfdmVyc2lvbiI6IjAifQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_internet_gateway",
+      "name": "internet_gateway",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:178173414584:internet-gateway/igw-01f19a6e395b52012",
+            "id": "igw-01f19a6e395b52012",
+            "owner_id": "178173414584",
+            "region": "us-east-1",
+            "tags": {
+              "Name": "Simetrik Server-IGW"
+            },
+            "tags_all": {
+              "Name": "Simetrik Server-IGW"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-05b522b0ea4d5fee6"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMCJ9",
+          "dependencies": [
+            "module.networking.aws_vpc.vpc"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_nat_gateway",
+      "name": "nat_gateway_az1",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "allocation_id": "eipalloc-003985c488ad4a27e",
+            "association_id": "eipassoc-083a8f24b06e8f675",
+            "connectivity_type": "public",
+            "id": "nat-06fe1529b30f27e5d",
+            "network_interface_id": "eni-05f24318a800d95f2",
+            "private_ip": "10.0.0.209",
+            "public_ip": "35.168.35.87",
+            "region": "us-east-1",
+            "secondary_allocation_ids": [],
+            "secondary_private_ip_address_count": 0,
+            "secondary_private_ip_addresses": [],
+            "subnet_id": "subnet-0de78b3478a9d64d9",
+            "tags": {
+              "Name": "Nat Gateway AZ1"
+            },
+            "tags_all": {
+              "Name": "Nat Gateway AZ1"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTgwMDAwMDAwMDAwMCwidXBkYXRlIjo2MDAwMDAwMDAwMDB9LCJzY2hlbWFfdmVyc2lvbiI6IjAifQ==",
+          "dependencies": [
+            "module.networking.aws_eip.eip_for_nat_gateway_az1",
+            "module.networking.aws_subnet.public_subnet_az1",
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_nat_gateway",
+      "name": "nat_gateway_az2",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "allocation_id": "eipalloc-0f13203931445dc70",
+            "association_id": "eipassoc-0515af80d75cb6a05",
+            "connectivity_type": "public",
+            "id": "nat-07a50281bac4a5341",
+            "network_interface_id": "eni-0d2fb3d27f8713883",
+            "private_ip": "10.0.1.129",
+            "public_ip": "52.2.67.131",
+            "region": "us-east-1",
+            "secondary_allocation_ids": [],
+            "secondary_private_ip_address_count": 0,
+            "secondary_private_ip_addresses": [],
+            "subnet_id": "subnet-01eb0b0d03efee9ec",
+            "tags": {
+              "Name": "Nat Gateway AZ2"
+            },
+            "tags_all": {
+              "Name": "Nat Gateway AZ2"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTgwMDAwMDAwMDAwMCwidXBkYXRlIjo2MDAwMDAwMDAwMDB9LCJzY2hlbWFfdmVyc2lvbiI6IjAifQ==",
+          "dependencies": [
+            "module.networking.aws_eip.eip_for_nat_gateway_az2",
+            "module.networking.aws_subnet.public_subnet_az2",
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "private_route_table_az1",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:178173414584:route-table/rtb-04c381c40bd2659b4",
+            "id": "rtb-04c381c40bd2659b4",
+            "owner_id": "178173414584",
+            "propagating_vgws": [],
+            "region": "us-east-1",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "nat-06fe1529b30f27e5d",
+                "network_interface_id": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Name": "Private Route Table AZ1"
+            },
+            "tags_all": {
+              "Name": "Private Route Table AZ1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-05b522b0ea4d5fee6"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMCJ9",
+          "dependencies": [
+            "module.networking.aws_eip.eip_for_nat_gateway_az1",
+            "module.networking.aws_nat_gateway.nat_gateway_az1",
+            "module.networking.aws_subnet.public_subnet_az1",
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "private_route_table_az2",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:178173414584:route-table/rtb-0fe87d1d302db18f9",
+            "id": "rtb-0fe87d1d302db18f9",
+            "owner_id": "178173414584",
+            "propagating_vgws": [],
+            "region": "us-east-1",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "nat-07a50281bac4a5341",
+                "network_interface_id": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Name": "Private Route Table AZ2"
+            },
+            "tags_all": {
+              "Name": "Private Route Table AZ2"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-05b522b0ea4d5fee6"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMCJ9",
+          "dependencies": [
+            "module.networking.aws_eip.eip_for_nat_gateway_az2",
+            "module.networking.aws_nat_gateway.nat_gateway_az2",
+            "module.networking.aws_subnet.public_subnet_az2",
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "public_route_table",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:178173414584:route-table/rtb-030105e81ddcd0019",
+            "id": "rtb-030105e81ddcd0019",
+            "owner_id": "178173414584",
+            "propagating_vgws": [],
+            "region": "us-east-1",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "igw-01f19a6e395b52012",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "",
+                "network_interface_id": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {
+              "Name": "Public Route Table"
+            },
+            "tags_all": {
+              "Name": "Public Route Table"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-05b522b0ea4d5fee6"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMCJ9",
+          "dependencies": [
+            "module.networking.aws_internet_gateway.internet_gateway",
+            "module.networking.aws_vpc.vpc"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "private_subnet_az1_route_table_az1_association",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-0896013dcf432a40c",
+            "region": "us-east-1",
+            "route_table_id": "rtb-04c381c40bd2659b4",
+            "subnet_id": "subnet-07b8b9da40a92922e",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMCJ9",
+          "dependencies": [
+            "module.networking.aws_eip.eip_for_nat_gateway_az1",
+            "module.networking.aws_nat_gateway.nat_gateway_az1",
+            "module.networking.aws_route_table.private_route_table_az1",
+            "module.networking.aws_subnet.private_subnet_az1",
+            "module.networking.aws_subnet.public_subnet_az1",
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "private_subnet_az2_route_table_az2_association",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-0946a336a7351f8f7",
+            "region": "us-east-1",
+            "route_table_id": "rtb-0fe87d1d302db18f9",
+            "subnet_id": "subnet-0cdff6c52e88c1579",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMCJ9",
+          "dependencies": [
+            "module.networking.aws_eip.eip_for_nat_gateway_az2",
+            "module.networking.aws_nat_gateway.nat_gateway_az2",
+            "module.networking.aws_route_table.private_route_table_az2",
+            "module.networking.aws_subnet.private_subnet_az2",
+            "module.networking.aws_subnet.public_subnet_az2",
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "public_subnet_az1_rt_association",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-00949ad59f674cf50",
+            "region": "us-east-1",
+            "route_table_id": "rtb-030105e81ddcd0019",
+            "subnet_id": "subnet-0de78b3478a9d64d9",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMCJ9",
+          "dependencies": [
+            "module.networking.aws_internet_gateway.internet_gateway",
+            "module.networking.aws_route_table.public_route_table",
+            "module.networking.aws_subnet.public_subnet_az1",
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "public_subnet_az2_rt_association",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-04b15db9f8a8ae25e",
+            "region": "us-east-1",
+            "route_table_id": "rtb-030105e81ddcd0019",
+            "subnet_id": "subnet-01eb0b0d03efee9ec",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMCJ9",
+          "dependencies": [
+            "module.networking.aws_internet_gateway.internet_gateway",
+            "module.networking.aws_route_table.public_route_table",
+            "module.networking.aws_subnet.public_subnet_az2",
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "private_subnet_az1",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:178173414584:subnet/subnet-07b8b9da40a92922e",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1a",
+            "availability_zone_id": "use1-az2",
+            "cidr_block": "10.0.2.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-07b8b9da40a92922e",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": false,
+            "outpost_arn": "",
+            "owner_id": "178173414584",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-east-1",
+            "tags": {
+              "Name": "Private Subnet AZ1 - us-east-1a",
+              "kubernetes.io/role/internal-elb": "1"
+            },
+            "tags_all": {
+              "Name": "Private Subnet AZ1 - us-east-1a",
+              "kubernetes.io/role/internal-elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-05b522b0ea4d5fee6"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "module.networking.aws_subnet.public_subnet_az1",
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "private_subnet_az2",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:178173414584:subnet/subnet-0cdff6c52e88c1579",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1b",
+            "availability_zone_id": "use1-az4",
+            "cidr_block": "10.0.3.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0cdff6c52e88c1579",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": false,
+            "outpost_arn": "",
+            "owner_id": "178173414584",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-east-1",
+            "tags": {
+              "Name": "Private Subnet AZ2 - us-east-1b",
+              "kubernetes.io/role/internal-elb": "1"
+            },
+            "tags_all": {
+              "Name": "Private Subnet AZ2 - us-east-1b",
+              "kubernetes.io/role/internal-elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-05b522b0ea4d5fee6"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "module.networking.aws_subnet.public_subnet_az2",
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "public_subnet_az1",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:178173414584:subnet/subnet-0de78b3478a9d64d9",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1a",
+            "availability_zone_id": "use1-az2",
+            "cidr_block": "10.0.0.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0de78b3478a9d64d9",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "178173414584",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-east-1",
+            "tags": {
+              "Name": "Public Subnet AZ1 - us-east-1a",
+              "kubernetes.io/role/elb": "1"
+            },
+            "tags_all": {
+              "Name": "Public Subnet AZ1 - us-east-1a",
+              "kubernetes.io/role/elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-05b522b0ea4d5fee6"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "public_subnet_az2",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:178173414584:subnet/subnet-01eb0b0d03efee9ec",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1b",
+            "availability_zone_id": "use1-az4",
+            "cidr_block": "10.0.1.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-01eb0b0d03efee9ec",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "178173414584",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "us-east-1",
+            "tags": {
+              "Name": "Public Subnet AZ2 - us-east-1b",
+              "kubernetes.io/role/elb": "1"
+            },
+            "tags_all": {
+              "Name": "Public Subnet AZ2 - us-east-1b",
+              "kubernetes.io/role/elb": "1"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-05b522b0ea4d5fee6"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "module.networking.aws_vpc.vpc",
+            "module.networking.data.aws_availability_zones.availability_zones"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.networking",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "vpc",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:us-east-1:178173414584:vpc/vpc-05b522b0ea4d5fee6",
+            "assign_generated_ipv6_cidr_block": false,
+            "cidr_block": "10.0.0.0/16",
+            "default_network_acl_id": "acl-0b241455f70d590bd",
+            "default_route_table_id": "rtb-03c5af8100ea39825",
+            "default_security_group_id": "sg-02ef69ae1131d1205",
+            "dhcp_options_id": "dopt-0b34245c6a8a178bb",
+            "enable_dns_hostnames": true,
+            "enable_dns_support": true,
+            "enable_network_address_usage_metrics": false,
+            "id": "vpc-05b522b0ea4d5fee6",
+            "instance_tenancy": "default",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_network_border_group": "",
+            "ipv6_ipam_pool_id": "",
+            "ipv6_netmask_length": 0,
+            "main_route_table_id": "rtb-03c5af8100ea39825",
+            "owner_id": "178173414584",
+            "region": "us-east-1",
+            "tags": {
+              "Name": "Simetrik Server-VPC"
+            },
+            "tags_all": {
+              "Name": "Simetrik Server-VPC"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
