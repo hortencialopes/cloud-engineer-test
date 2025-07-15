@@ -5,11 +5,11 @@ Store the terraform state in s3 bucket and the lock with DynamoDB table
 # #cluster 
 terraform {
   backend "s3" {
-    bucket         = "insert your bucket name"
-    key            = "insert your bucket key"
-    region         = "your region"
-    profile        = "your cli profile"
-    dynamodb_table = "your dynamo db table"
+    bucket         = "178173414584-us-east-1"
+    key            = "aws-networking/terraform.tfstate"
+    region         = "us-east-1"
+    profile        = "terraform-profile"
+    dynamodb_table = "178173414584-us-east-1-terraform-locks"
     encrypt = true
   }
 }
