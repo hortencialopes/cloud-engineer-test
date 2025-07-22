@@ -58,7 +58,9 @@ resource "aws_eks_node_group" "eks_node_group" {
     aws_iam_role_policy_attachment.nodes_policies,
   ]
 
-  tags = var.tags
+  tags = {
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+  }
 }
 
 data "aws_eks_cluster_auth" "cluster" {

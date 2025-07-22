@@ -1,0 +1,61 @@
+digraph G {
+  rankdir = "RL";
+  node [shape = rect, fontname = "sans-serif"];
+  subgraph "cluster_module.eks" {
+    label = "module.eks"
+    fontname = "sans-serif"
+    "module.eks.data.aws_availability_zones.availability_zones" [label="data.aws_availability_zones.availability_zones"];
+    "module.eks.data.aws_eks_cluster_auth.cluster" [label="data.aws_eks_cluster_auth.cluster"];
+    "module.eks.data.aws_iam_policy_document.aws_load_balancer_controller" [label="data.aws_iam_policy_document.aws_load_balancer_controller"];
+    "module.eks.data.aws_iam_policy_document.codebuild" [label="data.aws_iam_policy_document.codebuild"];
+    "module.eks.data.terraform_remote_state.networking" [label="data.terraform_remote_state.networking"];
+    "module.eks.data.tls_certificate.eks_cluster" [label="data.tls_certificate.eks_cluster"];
+    "module.eks.aws_codebuild_project.app" [label="aws_codebuild_project.app"];
+    "module.eks.aws_codebuild_source_credential.github" [label="aws_codebuild_source_credential.github"];
+    "module.eks.aws_codebuild_webhook.github_trigger" [label="aws_codebuild_webhook.github_trigger"];
+    "module.eks.aws_ecr_lifecycle_policy.ecr_policy" [label="aws_ecr_lifecycle_policy.ecr_policy"];
+    "module.eks.aws_ecr_repository.ecr" [label="aws_ecr_repository.ecr"];
+    "module.eks.aws_eks_cluster.eks_cluster" [label="aws_eks_cluster.eks_cluster"];
+    "module.eks.aws_eks_node_group.eks_node_group" [label="aws_eks_node_group.eks_node_group"];
+    "module.eks.aws_iam_openid_connect_provider.cluster_oidc" [label="aws_iam_openid_connect_provider.cluster_oidc"];
+    "module.eks.aws_iam_policy.aws_load_balancer_controller" [label="aws_iam_policy.aws_load_balancer_controller"];
+    "module.eks.aws_iam_policy.codebuild" [label="aws_iam_policy.codebuild"];
+    "module.eks.aws_iam_role.aws_load_balancer_controller" [label="aws_iam_role.aws_load_balancer_controller"];
+    "module.eks.aws_iam_role.cluster" [label="aws_iam_role.cluster"];
+    "module.eks.aws_iam_role.codebuild" [label="aws_iam_role.codebuild"];
+    "module.eks.aws_iam_role.nodes" [label="aws_iam_role.nodes"];
+    "module.eks.aws_iam_role_policy_attachment.aws_load_balancer_controller" [label="aws_iam_role_policy_attachment.aws_load_balancer_controller"];
+    "module.eks.aws_iam_role_policy_attachment.cluster_amazon_eks_cluster_policy" [label="aws_iam_role_policy_attachment.cluster_amazon_eks_cluster_policy"];
+    "module.eks.aws_iam_role_policy_attachment.codebuild" [label="aws_iam_role_policy_attachment.codebuild"];
+    "module.eks.aws_iam_role_policy_attachment.nodes_policies" [label="aws_iam_role_policy_attachment.nodes_policies"];
+    "module.eks.kubernetes_config_map_v1.aws_auth" [label="kubernetes_config_map_v1.aws_auth"];
+    "module.eks.kubernetes_service_account_v1.aws_load_balancer_controller" [label="kubernetes_service_account_v1.aws_load_balancer_controller"];
+  }
+  "module.eks.data.aws_iam_policy_document.codebuild" -> "module.eks.aws_ecr_repository.ecr";
+  "module.eks.data.aws_iam_policy_document.codebuild" -> "module.eks.aws_eks_cluster.eks_cluster";
+  "module.eks.data.tls_certificate.eks_cluster" -> "module.eks.aws_eks_cluster.eks_cluster";
+  "module.eks.aws_codebuild_project.app" -> "module.eks.aws_ecr_repository.ecr";
+  "module.eks.aws_codebuild_project.app" -> "module.eks.aws_iam_role.codebuild";
+  "module.eks.aws_codebuild_webhook.github_trigger" -> "module.eks.aws_codebuild_project.app";
+  "module.eks.aws_ecr_lifecycle_policy.ecr_policy" -> "module.eks.aws_ecr_repository.ecr";
+  "module.eks.aws_eks_cluster.eks_cluster" -> "module.eks.data.terraform_remote_state.networking";
+  "module.eks.aws_eks_cluster.eks_cluster" -> "module.eks.aws_iam_role_policy_attachment.cluster_amazon_eks_cluster_policy";
+  "module.eks.aws_eks_node_group.eks_node_group" -> "module.eks.aws_eks_cluster.eks_cluster";
+  "module.eks.aws_eks_node_group.eks_node_group" -> "module.eks.aws_iam_role_policy_attachment.nodes_policies";
+  "module.eks.aws_iam_openid_connect_provider.cluster_oidc" -> "module.eks.data.tls_certificate.eks_cluster";
+  "module.eks.aws_iam_policy.aws_load_balancer_controller" -> "module.eks.data.aws_iam_policy_document.aws_load_balancer_controller";
+  "module.eks.aws_iam_policy.codebuild" -> "module.eks.data.aws_iam_policy_document.codebuild";
+  "module.eks.aws_iam_role.aws_load_balancer_controller" -> "module.eks.aws_iam_openid_connect_provider.cluster_oidc";
+  "module.eks.aws_iam_role_policy_attachment.aws_load_balancer_controller" -> "module.eks.aws_iam_policy.aws_load_balancer_controller";
+  "module.eks.aws_iam_role_policy_attachment.aws_load_balancer_controller" -> "module.eks.aws_iam_role.aws_load_balancer_controller";
+  "module.eks.aws_iam_role_policy_attachment.cluster_amazon_eks_cluster_policy" -> "module.eks.aws_iam_role.cluster";
+  "module.eks.aws_iam_role_policy_attachment.codebuild" -> "module.eks.aws_iam_policy.codebuild";
+  "module.eks.aws_iam_role_policy_attachment.codebuild" -> "module.eks.aws_iam_role.codebuild";
+  "module.eks.aws_iam_role_policy_attachment.nodes_policies" -> "module.eks.aws_iam_role.nodes";
+  "module.eks.kubernetes_config_map_v1.aws_auth" -> "module.eks.data.aws_eks_cluster_auth.cluster";
+  "module.eks.kubernetes_config_map_v1.aws_auth" -> "module.eks.aws_eks_cluster.eks_cluster";
+  "module.eks.kubernetes_config_map_v1.aws_auth" -> "module.eks.aws_iam_role.codebuild";
+  "module.eks.kubernetes_config_map_v1.aws_auth" -> "module.eks.aws_iam_role.nodes";
+  "module.eks.kubernetes_service_account_v1.aws_load_balancer_controller" -> "module.eks.data.aws_eks_cluster_auth.cluster";
+  "module.eks.kubernetes_service_account_v1.aws_load_balancer_controller" -> "module.eks.aws_iam_role.aws_load_balancer_controller";
+}

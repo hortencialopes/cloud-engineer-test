@@ -16,6 +16,7 @@ module "networking" {
   public_subnet_az2_cidr  = var.public_subnet_az2_cidr
   private_subnet_az1_cidr = var.private_subnet_az1_cidr
   private_subnet_az2_cidr = var.private_subnet_az2_cidr
+  cluster_name = var.cluster_name
 }
 
 output "networking_output" {

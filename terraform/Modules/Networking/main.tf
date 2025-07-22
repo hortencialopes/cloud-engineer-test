@@ -43,6 +43,7 @@ resource "aws_subnet" "public_subnet_az1" {
   tags = {
     Name = "Public Subnet AZ1 - ${data.aws_availability_zones.availability_zones.names[0]}"
     "kubernetes.io/role/elb" = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 
@@ -55,6 +56,7 @@ resource "aws_subnet" "public_subnet_az2" {
   tags = {
     Name = "Public Subnet AZ2 - ${data.aws_availability_zones.availability_zones.names[1]}"
     "kubernetes.io/role/elb" = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 
@@ -92,6 +94,7 @@ resource "aws_subnet" "private_subnet_az1" {
   tags = {
     Name = "Private Subnet AZ1 - ${aws_subnet.public_subnet_az1.availability_zone}"
     "kubernetes.io/role/internal-elb" = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 
@@ -104,6 +107,7 @@ resource "aws_subnet" "private_subnet_az2" {
   tags = {
     Name = "Private Subnet AZ2 - ${aws_subnet.public_subnet_az2.availability_zone}"
     "kubernetes.io/role/internal-elb" = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 

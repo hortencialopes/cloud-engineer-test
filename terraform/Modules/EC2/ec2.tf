@@ -8,7 +8,7 @@ resource "aws_security_group" "client_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["189.69.9.85/32"] 
+    cidr_blocks = ["179.130.141.92/32"] 
   }
 
   egress {
@@ -24,19 +24,19 @@ resource "aws_security_group" "client_sg" {
 }
 
 # Find the latest Amazon Linux 2 AMI
-data "aws_ami" "amazon_linux_2" {
+data "aws_ami" "al2023" {
   most_recent = true
   owners      = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+    values = ["al2023-ami-2023.*-x86_64"]
   }
 }
 
 # The EC2 instance resource
 resource "aws_instance" "grpc_client" {
-  ami           = data.aws_ami.amazon_linux_2.id
+  ami           = data.aws_ami.al2023.id
   instance_type = "t2.micro" 
   subnet_id     = data.terraform_remote_state.network.outputs.networking_output.public_subnet_az1_id
   vpc_security_group_ids = [aws_security_group.client_sg.id]
