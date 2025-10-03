@@ -1,6 +1,6 @@
-# Simetrik Cloud Engineer Technical Test - Hortencia Santos
+# Cloud Engineer Technical Test - Hortencia Santos
 
-Welcome to my solution for the Simetrik Cloud Engineer technical test. This repository is structured to provide a clear overview of the applications, the infrastructure as code, and all supporting materials.
+Welcome to my solution for the Cloud Engineer technical test. This repository is structured to provide a clear overview of the applications, the infrastructure as code, and all supporting materials.
 
 Here's a breakdown of what you'll find:
 
